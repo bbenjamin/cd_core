@@ -5,19 +5,19 @@
 
 /* eslint-env es6:false, node:false */
 /* eslint-disable strict, func-names, object-shorthand, no-var, prefer-template, prefer-arrow-callback */
-(function($, Drupal) {
+(function($, Drupal, once) {
   "use strict";
 
   Drupal.behaviors.themeswitcherAutoSubmit = {
     attach: function(context) {
-      var $form = $(".js-themeswitcher-form", context).once(
-        "themeswitcherAutoSubmit"
-      );
-      $form.on("change", "select", function() {
-        $form.trigger("submit");
-      });
+      once('themeswitcherAutoSubmit', '.js-themeswitcher-form', context)
+        .forEach((form) => {
+          $(form).on("change", "select", function() {
+            $(form).trigger("submit");
+          });
+        });
     }
   };
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);
 /* eslint-enable strict, func-names, object-shorthand, no-var, prefer-template, prefer-arrow-callback */
 /* eslint-env es6:true, node:true */
